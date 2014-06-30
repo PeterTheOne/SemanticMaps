@@ -3,6 +3,7 @@
 use Maps\Elements\Location;
 use Maps\Element;
 use Maps\Elements\BaseElement;
+use ParamProcessor\ParamDefinition;
 
 /**
  * Query printer for maps. Is invoked via SMMapper.
@@ -50,7 +51,7 @@ class SMMapPrinter extends SMW\ResultPrinter {
 	 * @return array
 	 */
 	protected function getParameterInfo() {
-		global $smgQPForceShow, $smgQPShowTitle, $smgQPTemplate, $smgQPHideNamespace;
+		global $smgQPShowTitle, $smgQPTemplate, $smgQPHideNamespace;
 		
 		$params = ParamDefinition::getCleanDefinitions( MapsMapper::getCommonParameters() );
 
