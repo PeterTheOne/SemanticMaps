@@ -26,17 +26,22 @@ class Coordinates extends Query {
 
 
     public function execute() {
-        $parameterFormatter = new ApiRequestParameterFormatter( $this->extractRequestParams() );
+        $params = $this->extractRequestParams();
+        $parameterFormatter = new ApiRequestParameterFormatter( $params );
         $outputFormat = 'json';
 
+        $nameOfCoordinates = 'Has coordinates';
+
         $conditions = $parameterFormatter->getAskArgsApiParameter( 'conditions' );
-        $conditions .= '[[Has coordinates::+]]';
+        $conditions .= '[[' . $nameOfCoordinates . '::+]]';
+        $conditions .= '[[' . $nameOfCoordinates . '::>' . $params['bbSouth'] . '°,\' . $params[\'bbWest\'] . \'°]]';
+        $conditions .= '[[' . $nameOfCoordinates . '::<\' . . \'°,\' . . \'°]]';
 
         $printouts = $parameterFormatter->getAskArgsApiParameter( 'printouts' );
         $printouts[] = new PrintRequest(
             PrintRequest::PRINT_PROP,
-            'Has coordinates',
-            SMWPropertyValue::makeUserProperty( 'Has coordinates' )
+            $nameOfCoordinates,
+            SMWPropertyValue::makeUserProperty( $nameOfCoordinates )
         );
 
         $parameters = $parameterFormatter->getAskArgsApiParameter( 'parameters' );
@@ -52,6 +57,18 @@ class Coordinates extends Query {
         }
 
         // todo filter by bounding box
+
+        /*$queryResult = array_filter($queryResult, function($location) {
+            global $nameOfCoordinates;
+            global $params;
+
+            $lat = $location['printout'][$nameOfCoordinates]['lat'];
+            $lon = $location['printout'][$nameOfCoordinates]['lon'];
+            if ($lat < $params['bbNorth'] && $lat > $params['bbSouth']) {
+                return true;
+            }
+            return false;
+        });*/
 
         $this->addQueryResult( $queryResult, $outputFormat );
 
