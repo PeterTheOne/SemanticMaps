@@ -20,7 +20,7 @@
                 map.map.events.register( 'moveend', map.map, function () {
                     var bounds = map.map.getExtent().transform(map.map.projection, map.map.displayProjection);
                     var query = sm.buildQueryString(
-                        map.options.ajaxquery.join( ' ' ) + ' ',
+                        map.options.ajaxquery + ' ',
                         map.options.ajaxcoordproperty,
                         bounds.top,
                         bounds.right,

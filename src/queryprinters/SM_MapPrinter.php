@@ -103,8 +103,7 @@ class SMMapPrinter extends SMW\ResultPrinter {
 
 		$params['ajaxquery'] = array(
 			'default' => '',
-			'type' => 'string',
-			'islist' => true,
+			'type' => 'string'
 		);
 
 		// Messages:
@@ -147,6 +146,12 @@ class SMMapPrinter extends SMW\ResultPrinter {
 
 		$params = $this->params;
 
+		if ( $params['ajaxquery'] === ''  ) {
+			$params['ajaxquery'] = '<nowiki>' . $res->getQuery()->getQueryString() . '</nowiki>';
+		} else {
+			$params['ajaxquery'] = '<nowiki>' . $params['ajaxquery'] . '</nowiki>';
+		}
+
 		$queryHandler = new SMQueryHandler( $res, $outputmode );
 		$queryHandler->setLinkStyle($params['link']);
 		$queryHandler->setHeaderStyle($params['headers']);
@@ -187,6 +192,23 @@ class SMMapPrinter extends SMW\ResultPrinter {
 		else {
 			return $params['default'];
 		}
+	}
+
+
+	/**
+	 * Similar to handleParameters.
+	 */
+	protected function postProcessParameters() {
+		parent::postProcessParameters();
+
+		/*$params = $this->params;
+
+		if ( substr( $params['ajaxquery'], 0, 8 ) === '<nowiki>' ) {
+			$params['ajaxquery'] = substr( $params['ajaxquery'], 8 );
+		}
+		if ( substr( $params['ajaxquery'], -9, 9 ) === '</nowiki>' ) {
+			$params['ajaxquery'] = substr( $params['ajaxquery'], 0, strlen($params['ajaxquery']) -9 );
+		}*/
 	}
 
 	/**

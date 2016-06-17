@@ -22,7 +22,7 @@
                 map.map.on( mapEvents.join( ' ' ), function() {
                     var bounds = map.map.getBounds();
                     var query = sm.buildQueryString(
-                        map.options.ajaxquery.join( ' ' ) + ' ',
+                        map.options.ajaxquery + ' ',
                         map.options.ajaxcoordproperty,
                         bounds.getNorthEast().lat,
                         bounds.getNorthEast().lng,
